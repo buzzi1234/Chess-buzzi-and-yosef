@@ -21,20 +21,20 @@ Rook::~Rook()
 *		 board - the board of the game
 * output: true if the the move is valid false if not
 */
-bool Rook::move(char color, Piece* board[][8])
+bool Rook::move(char color, Piece* board[][BOARD_LEN])
 {
 	if (inTheWay(color, board))
 	{
 		switch (getColor())
-		{
-			case 'b':
-				return eat('w', board);
+		{ 
+			case BLACK_ROOK:
+				return eat(WHITE_ROOK, board);
 				break;
 
-			case 'w':
-				return eat('b', board);
+			case WHITE_ROOK:
+				return eat(BLACK_ROOK, board);
 			default:
-				return eat('#', board);
+				return eat(NONE_ROOK, board);
 		}
 	}
 	return false;
@@ -46,7 +46,7 @@ input: color - the kind of pieces we are looking for
 *	   board - the board of the game
 * output: true if the the move is valid false if not
 */
-bool Rook::eat(char color, Piece* board[][8])
+bool Rook::eat(char color, Piece* board[][BOARD_LEN])
 {
 	if (getStartIndex().getRow() == getEndIndex().getRow() && getStartIndex().getCol() != getEndIndex().getCol())
 	{
@@ -71,13 +71,13 @@ bool Rook::eat(char color, Piece* board[][8])
 *		 board - the board of the game
 * output: true if the the move is valid false if not
 */
-bool Rook::inTheWay(char color, Piece* board[][8])
+bool Rook::inTheWay(char color, Piece* board[][BOARD_LEN])
 {
 	if (getStartIndex().getRow() == getEndIndex().getRow() && getStartIndex().getCol() != getEndIndex().getCol())
 	{
 		if (getStartIndex().getCol() > getEndIndex().getCol())
 		{
-			for (int col = getStartIndex().getCol() - 1; col > getEndIndex().getCol(); col--)
+			for (int col = getStartIndex().getCol() - HELP_NUM; col > getEndIndex().getCol(); col--)
 			{
 				if (board[getStartIndex().getRow()][col]->getColor() == color)
 				{
@@ -89,7 +89,7 @@ bool Rook::inTheWay(char color, Piece* board[][8])
 		
 		if (getStartIndex().getCol()< getEndIndex().getCol())
 		{
-			for (int col = getStartIndex().getCol() + 1; col < getEndIndex().getCol(); col++)
+			for (int col = getStartIndex().getCol() + HELP_NUM; col < getEndIndex().getCol(); col++)
 			{
 				if (board[getStartIndex().getRow()][col]->getColor() == color)
 				{
@@ -104,7 +104,7 @@ bool Rook::inTheWay(char color, Piece* board[][8])
 	{
 		if (getStartIndex().getRow() > getEndIndex().getRow())
 		{
-			for (int row = getStartIndex().getRow() - 1; row > getEndIndex().getRow(); row--)
+			for (int row = getStartIndex().getRow() - HELP_NUM; row > getEndIndex().getRow(); row--)
 			{
 				if (board[row][getStartIndex().getCol()]->getColor() == color)
 				{
@@ -116,7 +116,7 @@ bool Rook::inTheWay(char color, Piece* board[][8])
 
 		if (getStartIndex().getRow() < getEndIndex().getRow())
 		{
-			for (int row = getStartIndex().getRow() + 1; row < getEndIndex().getRow(); row++)
+			for (int row = getStartIndex().getRow() + HELP_NUM; row < getEndIndex().getRow(); row++)
 			{
 				if (board[row][getStartIndex().getCol()]->getColor() == color)
 				{
