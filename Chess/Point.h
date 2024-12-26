@@ -7,6 +7,7 @@ private:
 	int _col;
 public:
 	Point(int row, int col);
+	Point();
 	~Point();
 	int getRow() const;
 	int getCol() const;

@@ -10,7 +10,8 @@ protected:
 	Point _endIndex;
 	char _color;
 public:
-	Piece(Point startIndex, char color);
+	Piece();
+	~Piece();
 	
 	virtual bool move(char color, Piece* board[][8]) = 0;
 	virtual bool eat(char color, Piece* board[][8]) = 0;
