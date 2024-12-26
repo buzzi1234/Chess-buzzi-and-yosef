@@ -1,4 +1,17 @@
 #include "Piece.h"
+Piece::Piece()
+{
+	Point _startIndex();
+	Point _endIndex();
+	setColor('#');
+}
+
+Piece::~Piece()
+{
+	delete& this->_startIndex;
+	delete& this->_endIndex;
+	setColor('\0');
+}
 
 //getters
 Point Piece::getStartIndex() const

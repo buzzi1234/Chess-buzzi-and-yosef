@@ -11,4 +11,6 @@ public:
 	virtual bool eat(char color, Piece* board[][8]) override;
 	virtual bool inTheWay(char color, Piece* board[][8]) override;
 
+
+
 };

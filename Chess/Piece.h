@@ -5,21 +5,22 @@
 #include "Point.h"
 
 class Piece {
-private:
+protected:
 	Point _startIndex;
 	Point _endIndex;
 	char _color;
 public:
+	Piece(Point startIndex, char color);
 	
 	virtual bool move(char color, Piece* board[][8]) = 0;
 	virtual bool eat(char color, Piece* board[][8]) = 0;
 	virtual bool inTheWay(char color, Piece* board[][8]) = 0;
-	Point getStartIndex() const;
-	Point getEndIndex() const;
-	char getColor() const;
+	virtual Point getStartIndex() const;
+	virtual Point getEndIndex() const;
+	virtual char getColor() const;
 	
-	void setStartIndex(Point startIndex);
-	void setEndIndex(Point endIndex);
-	void setColor(char color);
+	virtual void setStartIndex(Point startIndex);
+	virtual void setEndIndex(Point endIndex);
+	virtual void setColor(char color);
 
 };

@@ -1,7 +1,8 @@
 #include "Rook.h"
 
 //constructor
-Rook::Rook(Point startIndex, char color)
+Rook::Rook(Point startIndex, char color) :
+	Piece()
 {
 	setStartIndex(startIndex);
 	setEndIndex(startIndex);
@@ -11,9 +12,7 @@ Rook::Rook(Point startIndex, char color)
 //destructor
 Rook::~Rook()
 {
-	delete &getStartIndex();
-	delete &getEndIndex();
-	setColor('\0');
+	Piece::~Piece();
 }
 
 /*
@@ -26,11 +25,19 @@ bool Rook::move(char color, Piece* board[][8])
 {
 	if (inTheWay(color, board))
 	{
-		if (board[getEndIndex() / 10][getEndIndex() % 10])
+		switch (getColor())
 		{
+			case 'b':
+				return eat('w', board);
+				break;
 
+			case 'w':
+				return eat('b', board);
+			default:
+				return eat('#', board);
 		}
 	}
+	return false;
 }
 
 /*
@@ -120,5 +127,4 @@ bool Rook::inTheWay(char color, Piece* board[][8])
 		}
 	
 	return false;
-	
 }

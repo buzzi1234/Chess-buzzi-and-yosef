@@ -5,6 +5,11 @@ Point::Point(int row, int col)
 	setRow(row);
 	setCol(col);
 }
+Point::Point()
+{
+	setRow(0);
+	setCol(0);
+}
 //sestructor
 Point::~Point()
 {
