@@ -1,10 +1,10 @@
 #include "Piece.h"
 //getters
-std::string Piece::getStartIndex()
+int Piece::getStartIndex()
 {
 	return _startIndex;
 }
-std::string Piece::getEndIndex()
+int Piece::getEndIndex()
 {
 	return _endIndex;
 }
@@ -14,11 +14,11 @@ char Piece::getColor()
 }
 
 //setters
-void Piece::setStartIndex(std::string startIndex)
+void Piece::setStartIndex(int startIndex)
 {
 	_startIndex = startIndex;
 }
-void Piece::setEndIndex(std::string endIndex)
+void Piece::setEndIndex(int endIndex)
 {
 	_endIndex = endIndex;
 }

@@ -5,19 +5,19 @@
 
 class Piece {
 private:
-	std::string _startIndex;
-	std::string _endIndex;
+	int _startIndex;
+	int _endIndex;
 	char _color;
 public:
 	virtual bool move() = 0;
 	virtual bool eat() = 0;
 	virtual bool inTheWay() = 0;
-	std::string getStartIndex();
-	std::string getEndIndex();
+	int getStartIndex();
+	int getEndIndex();
 	char getColor();
 	
-	void setStartIndex(std::string startIndex);
-	void setEndIndex(std::string endIndex);
+	void setStartIndex(int startIndex);
+	void setEndIndex(int endIndex);
 	void setColor(char color);
 
 };
