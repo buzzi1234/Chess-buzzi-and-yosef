@@ -1,7 +1,7 @@
 #include "Rook.h"
 
 //constructor
-Rook::Rook(int startIndex, char color)
+Rook::Rook(Point startIndex, char color)
 {
 	setStartIndex(startIndex);
 	setEndIndex(startIndex);
@@ -11,37 +11,68 @@ Rook::Rook(int startIndex, char color)
 //destructor
 Rook::~Rook()
 {
-	setStartIndex(0);
-	setEndIndex(0);
+	delete &getStartIndex();
+	delete &getEndIndex();
 	setColor('\0');
 }
 
-bool Rook::move()
+/*
+* The func check if move to the given index is valid
+* input: color - the kind of pieces we are looking for
+*		 board - the board of the game
+* output: true if the the move is valid false if not
+*/
+bool Rook::move(char color, Piece* board[][8])
 {
+	if (inTheWay(color, board))
+	{
+		if (board[getEndIndex() / 10][getEndIndex() % 10])
+		{
 
+		}
+	}
 }
-bool Rook::eat()
-{
 
+/*
+* The func checks if there is a player in the endindex can be eated
+input: color - the kind of pieces we are looking for
+*	   board - the board of the game
+* output: true if the the move is valid false if not
+*/
+bool Rook::eat(char color, Piece* board[][8])
+{
+	if (getStartIndex().getRow() == getEndIndex().getRow() && getStartIndex().getCol() != getEndIndex().getCol())
+	{
+		if (board[getStartIndex().getRow()][getEndIndex().getCol()]->getColor() == color)
+		{
+			return true;
+		}
+	}
+	else if (getStartIndex().getRow() != getEndIndex().getRow() && getStartIndex().getCol() == getEndIndex().getCol())
+	{
+		if (board[getEndIndex().getRow()][getStartIndex().getCol()]->getColor() == color)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 /*
 * The func checkes if there is pieces in the way of the current piece
 * input: color - the kind of pieces we are looking for
 *		 board - the board of the game
-*		 row - the width of the board
-*		 col - the height of the board
 * output: true if the the move is valid false if not
 */
 bool Rook::inTheWay(char color, Piece* board[][8])
 {
-	if (getStartIndex() / 10 == getEndIndex() / 10 && getStartIndex() % 10 != getEndIndex() % 10)
+	if (getStartIndex().getRow() == getEndIndex().getRow() && getStartIndex().getCol() != getEndIndex().getCol())
 	{
-		if (getStartIndex() % 10 > getEndIndex() % 10)
+		if (getStartIndex().getCol() > getEndIndex().getCol())
 		{
-			for (int col = (getStartIndex() % 10)- 1; col >= getEndIndex() % 10; col--)
+			for (int col = getStartIndex().getCol() - 1; col > getEndIndex().getCol(); col--)
 			{
-				if (board[getStartIndex() / 10][col]->getColor() == color)
+				if (board[getStartIndex().getRow()][col]->getColor() == color)
 				{
 					return false;
 				}
@@ -49,11 +80,11 @@ bool Rook::inTheWay(char color, Piece* board[][8])
 			return true;
 		}
 		
-		if (getStartIndex() % 10 < getEndIndex() % 10)
+		if (getStartIndex().getCol()< getEndIndex().getCol())
 		{
-			for (int col = (getStartIndex() % 10) + 1; col <= getEndIndex() % 10; col++)
+			for (int col = getStartIndex().getCol() + 1; col < getEndIndex().getCol(); col++)
 			{
-				if (board[getStartIndex() / 10][col]->getColor() == color)
+				if (board[getStartIndex().getRow()][col]->getColor() == color)
 				{
 					return false;
 				}
@@ -61,18 +92,14 @@ bool Rook::inTheWay(char color, Piece* board[][8])
 			return true;
 		}
 
-		else
-		{
-			return false;
-		}
 	}
-	else if (getStartIndex() / 10 != getEndIndex() / 10 && getStartIndex() % 10 == getEndIndex() % 10)
+	else if (getStartIndex().getRow() != getEndIndex().getRow() && getStartIndex().getCol() == getEndIndex().getCol())
 	{
-		if (getStartIndex() / 10 > getEndIndex() / 10)
+		if (getStartIndex().getRow() > getEndIndex().getRow())
 		{
-			for (int col = (getStartIndex() / 10) - 1; col >= getEndIndex() / 10; col--)
+			for (int row = getStartIndex().getRow() - 1; row > getEndIndex().getRow(); row--)
 			{
-				if (board[col][getStartIndex() % 10]->getColor() == color)
+				if (board[row][getStartIndex().getCol()]->getColor() == color)
 				{
 					return false;
 				}
@@ -80,21 +107,16 @@ bool Rook::inTheWay(char color, Piece* board[][8])
 			return true;
 		}
 
-		if (getStartIndex() / 10 < getEndIndex() / 10)
+		if (getStartIndex().getRow() < getEndIndex().getRow())
 		{
-			for (int col = (getStartIndex() / 10) + 1; col <= getEndIndex() / 10; col++)
+			for (int row = getStartIndex().getRow() + 1; row < getEndIndex().getRow(); row++)
 			{
-				if (board[col][getStartIndex() % 10]->getColor() == color)
+				if (board[row][getStartIndex().getCol()]->getColor() == color)
 				{
 					return false;
 				}
 			}
 			return true;
-		}
-
-		else
-		{
-			return false;
 		}
 	
 	return false;

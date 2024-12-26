@@ -1,24 +1,25 @@
 #include "Piece.h"
+
 //getters
-int Piece::getStartIndex()
+Point Piece::getStartIndex() const
 {
 	return _startIndex;
 }
-int Piece::getEndIndex()
+Point Piece::getEndIndex() const
 {
 	return _endIndex;
 }
-char Piece::getColor()
+char Piece::getColor() const
 {
 	return _color;
 }
 
 //setters
-void Piece::setStartIndex(int startIndex)
+void Piece::setStartIndex(Point startIndex)
 {
 	_startIndex = startIndex;
 }
-void Piece::setEndIndex(int endIndex)
+void Piece::setEndIndex(Point endIndex)
 {
 	_endIndex = endIndex;
 }

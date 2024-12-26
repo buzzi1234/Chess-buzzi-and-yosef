@@ -4,11 +4,11 @@
 class Rook : Piece
 {
 public:
-	Rook(int startIndex, char color);
+	Rook(Point startIndex, char color);
 	~Rook();
 
-	virtual bool move() override;
-	virtual bool eat() override;
+	virtual bool move(char color, Piece* board[][8]) override;
+	virtual bool eat(char color, Piece* board[][8]) override;
 	virtual bool inTheWay(char color, Piece* board[][8]) override;
 
 };
