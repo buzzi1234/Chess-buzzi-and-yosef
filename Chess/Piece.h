@@ -16,12 +16,12 @@ public:
 	virtual bool move(char color, Piece* board[][8]) = 0;
 	virtual bool eat(char color, Piece* board[][8]) = 0;
 	virtual bool inTheWay(char color, Piece* board[][8]) = 0;
-	virtual Point getStartIndex() const;
-	virtual Point getEndIndex() const;
-	virtual char getColor() const;
+	Point getStartIndex() const;
+	Point getEndIndex() const;
+	char getColor() const;
 	
-	virtual void setStartIndex(Point startIndex);
-	virtual void setEndIndex(Point endIndex);
-	virtual void setColor(char color);
+	void setStartIndex(Point startIndex);
+	void setEndIndex(Point endIndex);
+	void setColor(char color);
 
 };
