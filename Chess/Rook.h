@@ -9,6 +9,6 @@ public:
 
 	virtual bool move() override;
 	virtual bool eat() override;
-	virtual bool inTheWay() override;
+	virtual bool inTheWay(char color, Piece* board[][8]) override;
 
 };

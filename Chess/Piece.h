@@ -11,7 +11,7 @@ private:
 public:
 	virtual bool move() = 0;
 	virtual bool eat() = 0;
-	virtual bool inTheWay() = 0;
+	virtual bool inTheWay(char color, Piece* board[][8]) = 0;
 	int getStartIndex();
 	int getEndIndex();
 	char getColor();
