@@ -5,6 +5,8 @@
 #define WHITE_KING 'w'
 #define BLACK_KING 'b'
 #define NONE_KING '#'
+#define DIF_ROW 1
+#define DIF_COL 1
 
 
 class King : Piece
@@ -14,7 +16,6 @@ public:
 	~King();
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;
-	virtual bool eat(char color, Piece* board[][BOARD_LEN]) override;
 	virtual bool inTheWay(char color, Piece* board[][BOARD_LEN]) override;
 
 	bool check(char color, Piece* board[][BOARD_LEN]);
