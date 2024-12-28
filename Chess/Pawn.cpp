@@ -3,6 +3,7 @@
 Pawn::Pawn(Point startIndex, char color) :
 	Piece()
 {
+	this->_jumps = HELP_NUM;
 	setStartIndex(startIndex);
 	setColor(color);
 	setEndIndex(startIndex);
@@ -10,6 +11,7 @@ Pawn::Pawn(Point startIndex, char color) :
 //sestructor
 Pawn::~Pawn()
 {
+	this->_jumps = 0;
 	Piece::~Piece();
 }
 
@@ -70,7 +72,7 @@ bool Pawn::move(char color, Piece* board[][BOARD_LEN])
 		return false;
 	}
 
-
+	return false;
 }
 
 /*
@@ -99,18 +101,38 @@ bool Pawn::firstMove(char color, Piece* board[][BOARD_LEN])
 	case BLACK_PAWN:
 		if (getStartIndex().getRow() == ROW_NUM_BLACK)
 		{
-			return inTheWay(color, board);
+			if (inTheWay(color, board))
+			{
+				this->_jumps = DOUBLE_JUMP_PAWN;
+				if (inTheWay(color, board))
+				{
+					this->_jumps = HELP_NUM;
+					return true;
+				}
+				this->_jumps = HELP_NUM;
+			}
 		}
 		break;
 	case WHITE_PAWN:
 		if (getStartIndex().getRow() == ROW_NUM_WHITE)
 		{
-			return inTheWay(color, board);
+			if (inTheWay(color, board))
+			{
+				this->_jumps = DOUBLE_JUMP_PAWN;
+				if (inTheWay(color, board))
+				{
+					this->_jumps = HELP_NUM;
+					return true;
+				}
+				this->_jumps = HELP_NUM;
+			}
 		}
 		break;
 	default:
 		return false;
 	}
+
+	return false;
 }
 
 /*
@@ -125,13 +147,13 @@ bool Pawn::inTheWay(char color, Piece* board[][BOARD_LEN])
 	switch (color)
 	{
 	case BLACK_PAWN:
-		if (board[row - HELP_NUM][getStartIndex().getCol()]->getStartIndex().getRow() == EMPTY_INDEX)
+		if (board[row - this->_jumps][getStartIndex().getCol()]->getStartIndex().getRow() == EMPTY_INDEX)
 		{
 			return true;
 		}
 		break;
 	case WHITE_PAWN:
-		if (board[row + HELP_NUM][getStartIndex().getCol()]->getStartIndex().getRow() == EMPTY_INDEX)
+		if (board[row + this->_jumps][getStartIndex().getCol()]->getStartIndex().getRow() == EMPTY_INDEX)
 		{
 			return true;
 		}
@@ -139,4 +161,6 @@ bool Pawn::inTheWay(char color, Piece* board[][BOARD_LEN])
 	default:
 		return false;
 	}
+
+	return false;
 }

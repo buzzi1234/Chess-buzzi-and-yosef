@@ -11,6 +11,8 @@
 
 class Pawn : public Piece
 {
+private:
+	int _jumps;
 public:
 	Pawn(Point startIndex, char color);
 	~Pawn();
