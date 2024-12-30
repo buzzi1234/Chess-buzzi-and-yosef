@@ -1,5 +1,7 @@
 #pragma once
 #include "Piece.h"
+#include "Bishop.h"
+#include "Rook.h"
 
 #define BOARD_LEN 8
 #define HELP_COLOR '#'
@@ -8,7 +10,8 @@
 class Queen : public Piece
 {
 private:
-	char _bishopOrRook;
+	Rook* _rook;
+	Bishop* _bishop;
 public:
 	Queen(Point startIndex, char color);
 	~Queen();
