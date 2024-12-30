@@ -1,6 +1,6 @@
 #include "Queen.h"
 
-
+//constructor
 Queen::Queen(Point startIndex, char color)
 	: Piece()
 {
@@ -12,6 +12,7 @@ Queen::Queen(Point startIndex, char color)
 	_bishop = new Bishop(startIndex, color);
 }
 
+//destructor
 Queen::~Queen()
 {
 	delete _rook;
@@ -19,6 +20,12 @@ Queen::~Queen()
 	Piece::~Piece();
 }
 
+/*
+* The func check if move to the given index is valid
+* input: color - the kind of pieces we are looking for
+*		 board - the board of the game
+* output: true if the the move is valid false if not
+*/
 bool Queen::move(char color, Piece* board[][BOARD_LEN])
 {
 	if (abs(getEndIndex().getRow() - getStartIndex().getRow()) == abs(getEndIndex().getCol() - getStartIndex().getCol()))
@@ -36,6 +43,12 @@ bool Queen::move(char color, Piece* board[][BOARD_LEN])
 	return false;
 }
 
+/*
+* The func checks if there is a player in the endindex can be eated
+input: color - the kind of pieces we are looking for
+*	   board - the board of the game
+* output: true if the the move is valid false if not
+*/
 bool Queen::eat(char color, Piece* board[][BOARD_LEN])
 {
 	if (abs(getEndIndex().getRow() - getStartIndex().getRow()) == abs(getEndIndex().getCol() - getStartIndex().getCol()))
@@ -53,6 +66,12 @@ bool Queen::eat(char color, Piece* board[][BOARD_LEN])
 	return false;
 }
 
+/*
+* The func checkes if there is pieces in the way of the current piece
+* input: color - the kind of pieces we are looking for
+*		 board - the board of the game
+* output: true if the the move is valid false if not
+*/
 bool Queen::inTheWay(char color, Piece* board[][BOARD_LEN])
 {
 	if (abs(getEndIndex().getRow() - getStartIndex().getRow()) == abs(getEndIndex().getCol() - getStartIndex().getCol()))
