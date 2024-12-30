@@ -7,7 +7,7 @@
 #define HELP_NUM 1
 
 
-class Rook : Piece
+class Rook : public Piece
 {
 public:
 	Rook(Point startIndex, char color);

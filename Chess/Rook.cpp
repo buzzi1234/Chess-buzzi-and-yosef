@@ -86,8 +86,8 @@ bool Rook::inTheWay(char color, Piece* board[][BOARD_LEN])
 			}
 			return true;
 		}
-		
-		if (getStartIndex().getCol()< getEndIndex().getCol())
+
+		else if (getStartIndex().getCol() < getEndIndex().getCol())
 		{
 			for (int col = getStartIndex().getCol() + HELP_NUM; col < getEndIndex().getCol(); col++)
 			{
@@ -125,6 +125,6 @@ bool Rook::inTheWay(char color, Piece* board[][BOARD_LEN])
 			}
 			return true;
 		}
-	
+	}
 	return false;
 }

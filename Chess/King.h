@@ -9,7 +9,7 @@
 #define DIF_COL 1
 
 
-class King : Piece
+class King : public Piece
 {
 public:
 	King(Point startIndex, char color);
