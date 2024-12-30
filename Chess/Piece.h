@@ -11,6 +11,7 @@ protected:
 	Point _startIndex;
 	Point _endIndex;
 	char _color;
+	char _type;
 public:
 	Piece();
 	~Piece();
@@ -21,9 +22,11 @@ public:
 	Point getStartIndex() const;
 	Point getEndIndex() const;
 	char getColor() const;
+	char getType() const;
 	
 	void setStartIndex(Point startIndex);
 	void setEndIndex(Point endIndex);
 	void setColor(char color);
+	void setType(char type);
 
 };

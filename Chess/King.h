@@ -12,7 +12,7 @@
 class King : public Piece
 {
 public:
-	King(Point startIndex, char color);
+	King(Point startIndex, char color, char type);
 	~King();
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;

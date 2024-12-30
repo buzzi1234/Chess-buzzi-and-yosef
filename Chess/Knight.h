@@ -9,7 +9,7 @@
 class Knight : public Piece
 {
 public:
-	Knight(Point startIndex, char color);
+	Knight(Point startIndex, char color, char type);
 	~Knight();
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;

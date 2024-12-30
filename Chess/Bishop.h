@@ -7,7 +7,7 @@
 class Bishop : public Piece
 {
 public:
-	Bishop(Point startIndex, char color);
+	Bishop(Point startIndex, char color, char type);
 	~Bishop();
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;

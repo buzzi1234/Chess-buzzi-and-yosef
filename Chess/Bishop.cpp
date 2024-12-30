@@ -1,12 +1,13 @@
 #include "Bishop.h"
 #include <cmath>
 
-Bishop::Bishop(Point startIndex, char color)
+Bishop::Bishop(Point startIndex, char color, char type)
 	: Piece()
 {
 	setStartIndex(startIndex);
 	setColor(color);
 	setEndIndex(startIndex);
+	setType(type);
 }
 
 Bishop::~Bishop()

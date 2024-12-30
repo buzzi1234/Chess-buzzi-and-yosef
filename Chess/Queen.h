@@ -6,6 +6,8 @@
 #define BOARD_LEN 8
 #define HELP_COLOR '#'
 #define HELP_NUM 1
+#define ROOK_TYPE 'r'
+#define BISHOP_TYPE 'b'
 
 class Queen : public Piece
 {
@@ -13,7 +15,7 @@ private:
 	Rook* _rook;
 	Bishop* _bishop;
 public:
-	Queen(Point startIndex, char color);
+	Queen(Point startIndex, char color, char type);
 	~Queen();
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;

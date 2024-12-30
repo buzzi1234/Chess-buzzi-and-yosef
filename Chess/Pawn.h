@@ -14,7 +14,7 @@ class Pawn : public Piece
 private:
 	int _jumps;
 public:
-	Pawn(Point startIndex, char color);
+	Pawn(Point startIndex, char color, char type);
 	~Pawn();
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;

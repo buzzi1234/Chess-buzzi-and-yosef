@@ -1,12 +1,13 @@
 #include "Pawn.h"
 //constructor
-Pawn::Pawn(Point startIndex, char color) :
+Pawn::Pawn(Point startIndex, char color, char type) :
 	Piece()
 {
 	this->_jumps = HELP_NUM;
 	setStartIndex(startIndex);
 	setColor(color);
 	setEndIndex(startIndex);
+	setType(type);
 }
 //sestructor
 Pawn::~Pawn()

@@ -10,7 +10,7 @@
 class Rook : public Piece
 {
 public:
-	Rook(Point startIndex, char color);
+	Rook(Point startIndex, char color, char type);
 	~Rook();
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;

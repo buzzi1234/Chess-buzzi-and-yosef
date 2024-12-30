@@ -11,6 +11,7 @@ Piece::~Piece()
 	delete& this->_startIndex;
 	delete& this->_endIndex;
 	setColor('\0');
+	setType('\0');
 }
 
 //getters
@@ -27,6 +28,11 @@ char Piece::getColor() const
 	return _color;
 }
 
+char Piece::getType() const
+{
+	return _type;
+}
+
 //setters
 void Piece::setStartIndex(Point startIndex)
 {
@@ -39,4 +45,9 @@ void Piece::setEndIndex(Point endIndex)
 void Piece::setColor(char color)
 {
 	_color = color;
+}
+
+void Piece::setType(char type)
+{
+	_type = type;
 }

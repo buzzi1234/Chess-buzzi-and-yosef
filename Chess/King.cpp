@@ -2,12 +2,13 @@
 
 
 //constructor
-King::King(Point startIndex, char color) :
+King::King(Point startIndex, char color, char type) :
 	Piece()
 {
 	setStartIndex(startIndex);
 	setEndIndex(startIndex);
 	setColor(color);
+	setType(type);
 }
 
 //destructor

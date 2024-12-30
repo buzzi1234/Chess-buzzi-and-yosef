@@ -1,15 +1,16 @@
 #include "Queen.h"
 
 //constructor
-Queen::Queen(Point startIndex, char color)
+Queen::Queen(Point startIndex, char color, char type)
 	: Piece()
 {
 	setStartIndex(startIndex);
 	setEndIndex(startIndex);
 	setColor(color);
+	setType(type);
 
-	_rook = new Rook(startIndex, color);
-	_bishop = new Bishop(startIndex, color);
+	_rook = new Rook(startIndex, color, ROOK_TYPE);
+	_bishop = new Bishop(startIndex, color, BISHOP_TYPE);
 }
 
 //destructor
