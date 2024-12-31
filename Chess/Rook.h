@@ -1,7 +1,7 @@
 #pragma once
 #include "Piece.h"
-#define WHITE_ROOK 'w'
-#define BLACK_ROOK 'b'
+#define WHITE_ROOK 'W'
+#define BLACK_ROOK 'B'
 #define NONE_ROOK '#'
 #define BOARD_LEN 8
 #define HELP_NUM 1

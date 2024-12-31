@@ -1,11 +1,12 @@
 #include "Piece.h"
+//constructor
 Piece::Piece()
 {
 	Point _startIndex();
 	Point _endIndex();
 	setColor('#');
 }
-
+//destructor
 Piece::~Piece()
 {
 	delete& this->_startIndex;
@@ -36,10 +37,12 @@ char Piece::getType() const
 //setters
 void Piece::setStartIndex(Point startIndex)
 {
+	delete& _startIndex;
 	_startIndex = startIndex;
 }
 void Piece::setEndIndex(Point endIndex)
 {
+	delete& _endIndex;
 	_endIndex = endIndex;
 }
 void Piece::setColor(char color)

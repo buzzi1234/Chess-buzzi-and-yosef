@@ -14,4 +14,5 @@ public:
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;
 	virtual bool eat(char color, Piece* board[][BOARD_LEN]) override;
+	virtual bool inTheWay(char color, Piece* board[][BOARD_LEN]) override;
 };

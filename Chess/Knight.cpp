@@ -47,3 +47,11 @@ bool Knight::eat(char color, Piece* board[][BOARD_LEN])
 	}
 	return true;
 }
+
+/*
+* EMPTY FUNC BECAUSE WE DONT NEED INTHEWAY IN KNIGHT
+*/
+bool Knight::inTheWay(char color, Piece* board[][BOARD_LEN])
+{
+
+}
