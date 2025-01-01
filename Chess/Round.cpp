@@ -58,11 +58,14 @@ void Round::turnToBoard()
 	int txtIndex = 0;
 	char color = ' ';
 	char type = ' ';
+	char newType = ' ';
+	Point p(0, 0);
 	for (int row = 0; row < BOARD_LEN; row++)
 	{
 		for (int col = 0; col < BOARD_LEN; col++)
 		{
-			Point p(row, col);
+			p.setRow(row);
+			p.setCol(col);
 			if (islower(this->_inputBoard[txtIndex]))
 			{
 				type = this->_inputBoard[txtIndex];
@@ -73,29 +76,25 @@ void Round::turnToBoard()
 				type = this->_inputBoard[txtIndex];
 				color = WHITE;
 			}
-			char newType = toupper(type);
-			switch (newType)
-			{
-			case KING:
-
+			newType = toupper(type);
+			if(newType == KING)
 				this->_board[row][col] = new King(p, color, type);
-				break;
-			case KNIGHT:
+			else if (newType == KNIGHT)
 				this->_board[row][col] = new Knight(p, color, type);
-				break;
-			case PAWN:
+				
+			else if (newType == PAWN)
 				this->_board[row][col] = new Pawn(p, color, type);
-				break;
-			case QUEEN:
+
+			else if (newType == QUEEN)
 				this->_board[row][col] = new Queen(p, color, type);
-				break;
-			case ROOK:
+				
+			else if (newType == ROOK)
 				this->_board[row][col] = new Rook(p, color, type);
-				break;
-			case BISHOP:
+				
+			else if (newType == BISHOP)
 				this->_board[row][col] = new Bishop(p, color, type);
-				break;
-			default:
+			else
+			{
 				p.setRow(-1);
 				p.setCol(-1);
 				this->_board[row][col] = new Pawn(p, NONE, NONE);
@@ -144,10 +143,10 @@ bool Round::moveInBoard()
 		}
 		if (move)
 		{
-			Point p(-1, -1);
+			Point p3(-1, -1);
 			delete this->_board[p1.getRow()][p1.getCol()];
 			this->_board[p1.getRow()][p1.getCol()] = this->_board[p.getRow()][p.getCol()];
-			this->_board[p.getRow()][p.getCol()] = new Pawn(p, NONE, NONE);
+			this->_board[p.getRow()][p.getCol()] = new Pawn(p3, NONE, NONE);
 			return move;
 
 		}
@@ -228,6 +227,7 @@ Point* Round::turnToPoint(std::string point)
 		break;
 	}
 	row = point[1] - '0';
+	row--;
 
 	return new Point(row, col);
 }

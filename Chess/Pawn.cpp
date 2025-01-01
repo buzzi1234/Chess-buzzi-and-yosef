@@ -23,7 +23,7 @@ output: Returns true or false if it is possible or not.
 */
 bool Pawn::move(char color, Piece* board[][BOARD_LEN])
 {
-	switch (color)
+	switch (getColor())
 	{
 	case BLACK_PAWN:
 		//Eating diagonally to the left
@@ -49,7 +49,7 @@ bool Pawn::move(char color, Piece* board[][BOARD_LEN])
 		break;
 	case WHITE_PAWN:
 		//Eating diagonally to the left
-		if ((getStartIndex().getCol() + HELP_NUM == getEndIndex().getCol()) && (getStartIndex().getRow() + HELP_NUM == getEndIndex().getRow()))
+		if ((getStartIndex().getCol() - HELP_NUM == getEndIndex().getCol()) && (getStartIndex().getRow() + HELP_NUM == getEndIndex().getRow()))
 		{
 			return eat(color, board);
 		}
@@ -83,7 +83,7 @@ output: Returns true or false if it is possible or not.
 */
 bool Pawn::eat(char color, Piece* board[][BOARD_LEN])
 {
-	if (board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() == color)
+	if (board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() == color || board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() == NONE_PAWN)
 	{
 		return false;
 	}

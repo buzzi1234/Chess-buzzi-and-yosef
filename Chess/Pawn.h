@@ -2,6 +2,7 @@
 #include "Piece.h"
 #define WHITE_PAWN 'W'
 #define BLACK_PAWN 'B'
+#define NONE_PAWN '#'
 #define BOARD_LEN 8
 #define HELP_NUM 1
 #define ROW_NUM_BLACK 6
