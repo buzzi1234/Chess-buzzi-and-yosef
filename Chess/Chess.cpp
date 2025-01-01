@@ -1,19 +1,22 @@
 #include "Chess.h"
 
-Chess::Chess(std::string board)
-	: _board(board)
+Chess::Chess(std::string msg)
 {
-	_gameRounds = new Round(board);
+	this->_board[BOARD_BYTES - 1] = '\0';
+	this->_gameRounds = new Round(msg);
+	this->_gameRounds->turnToBoard();
 }
 
 Chess::~Chess()
 {
+	delete[] &this->_board;
+	this->_gameRounds->~Round();
 	delete _gameRounds;
 }
 
 void Chess::finishedGame()
 {
-	char winner = _gameRounds->win();
+	char winner = this->_gameRounds->win();
 	if (winner == BLACK)
 	{
 		std::cout << "Black wins the game!" << std::endl;
@@ -30,7 +33,7 @@ void Chess::finishedGame()
 
 void Chess::newRound()
 {
-	char currentColor = _gameRounds->getColor();
+	char currentColor = this->_gameRounds->getColor();
 	if (currentColor == WHITE)
 	{
 		_gameRounds->setColor(BLACK);
@@ -41,33 +44,46 @@ void Chess::newRound()
 	}
 }
 
-void Chess::game()
+void Chess::game(std::string msg)
 {
-	_gameRounds->turnToBoard();
 	bool moveSuccessful = false;
 
-	do
+	try
 	{
-		try
+		this->_gameRounds->setInputBoard(msg);
+		moveSuccessful = this->_gameRounds->moveInBoard();
+		if (!moveSuccessful)
 		{
-
-		}
-		catch (const ExceptionPieces& e)
-		{
-			std::cout << e.badMove() << std::endl;
+			throw ExceptionPieces();
 		}
 
-		try
+	}
+	catch (const ExceptionPieces& e)
+	{
+		std::cout << e.badMove() << std::endl;
+
+	}
+	for (int row = 0; row < BOARD_LEN; row++)
+	{
+		for (int col = 0; col < BOARD_LEN; col++)
 		{
-			bool kingInCheck = _gameRounds->check(_gameRounds->getColor(), _gameRounds->getBoard(), _gameRounds->getBoard()[0][0]->getStartIndex());
-			if (kingInCheck)
-			{
-				throw ExceptionPieces();
-			}
+			_board[(row*BOARD_LEN) + col] =_gameRounds->getBoard()[row][col]->getType();
 		}
-		catch (const ExceptionPieces& e)
-		{
-			std::cout << e.moveToCheck() << std::endl;
-		}
-	} while (true);
+	}
+	newRound();
+	if (_gameRounds->getColor() == WHITE)
+	{
+		_board[BOARD_LEN * BOARD_LEN] = '0';
+	}
+	else
+	{
+		_board[BOARD_LEN * BOARD_LEN] = BLACK;
+	}
+	
+}
+
+//getter
+char* Chess::getBoard()
+{
+	return this->_board;
 }

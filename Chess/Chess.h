@@ -3,18 +3,23 @@
 #include <string>
 #include <iostream>
 
+#define BOARD_BYTES 66
+
 class Chess
 {
 private:
 	Round* _gameRounds;
-	std::string _board;
+	char _board[BOARD_BYTES];
 
 public:
-	Chess(std::string board);
+	Chess(std::string msg);
 	~Chess();
+
+	char* getBoard();
+	
 
 	void finishedGame();
 	void newRound();
-	void game();
+	void game(std::string msg);
 };
 

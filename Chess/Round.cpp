@@ -18,9 +18,9 @@ Round::~Round()
 		{
 			delete _board[row][col];
 		}
-		delete _board[row];
+		delete[] &_board[row];
 	}
-	delete[] _board;
+	delete[] &_board;
 }
 
 //getters
@@ -57,6 +57,7 @@ void Round::turnToBoard()
 {
 	int txtIndex = 0;
 	char color = ' ';
+	char type = ' ';
 	for (int row = 0; row < BOARD_LEN; row++)
 	{
 		for (int col = 0; col < BOARD_LEN; col++)
@@ -64,32 +65,35 @@ void Round::turnToBoard()
 			Point p(row, col);
 			if (islower(this->_inputBoard[txtIndex]))
 			{
+				type = this->_inputBoard[txtIndex];
 				color = BLACK;
 			}
 			else
 			{
+				type = this->_inputBoard[txtIndex];
 				color = WHITE;
 			}
-			switch (tolower(this->_inputBoard[txtIndex]))
+			char newType = toupper(type);
+			switch (newType)
 			{
 			case KING:
 
-				this->_board[row][col] = new King(p, color, KING);
+				this->_board[row][col] = new King(p, color, type);
 				break;
 			case KNIGHT:
-				this->_board[row][col] = new Knight(p, color, KNIGHT);
+				this->_board[row][col] = new Knight(p, color, type);
 				break;
 			case PAWN:
-				this->_board[row][col] = new Pawn(p, color, PAWN);
+				this->_board[row][col] = new Pawn(p, color, type);
 				break;
 			case QUEEN:
-				this->_board[row][col] = new Queen(p, color, QUEEN);
+				this->_board[row][col] = new Queen(p, color, type);
 				break;
 			case ROOK:
-				this->_board[row][col] = new Rook(p, color, ROOK);
+				this->_board[row][col] = new Rook(p, color, type);
 				break;
 			case BISHOP:
-				this->_board[row][col] = new Bishop(p, color, BISHOP);
+				this->_board[row][col] = new Bishop(p, color, type);
 				break;
 			default:
 				p.setRow(-1);
@@ -124,7 +128,7 @@ bool Round::moveInBoard()
 		{
 			for (int col = 0; col < BOARD_LEN; col++)
 			{
-				if (this->_board[row][col]->getType() == KING && this->_board[row][col]->getColor() == getColor())
+				if (toupper(this->_board[row][col]->getType()) == KING && this->_board[row][col]->getColor() == getColor())
 				{
 					switch (getColor())
 					{
@@ -183,7 +187,7 @@ bool Round::check(char color, Piece* board[][BOARD_LEN], Point k)
 
 char Round::win()
 {
-
+	return 'c';
 }
 
 

@@ -53,5 +53,5 @@ bool Knight::eat(char color, Piece* board[][BOARD_LEN])
 */
 bool Knight::inTheWay(char color, Piece* board[][BOARD_LEN])
 {
-
+	return false;
 }

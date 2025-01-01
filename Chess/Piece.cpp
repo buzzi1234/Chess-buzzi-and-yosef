@@ -37,13 +37,13 @@ char Piece::getType() const
 //setters
 void Piece::setStartIndex(Point startIndex)
 {
-	delete& _startIndex;
-	_startIndex = startIndex;
+	_startIndex.setCol(startIndex.getCol());
+	_startIndex.setRow(startIndex.getRow());
 }
 void Piece::setEndIndex(Point endIndex)
 {
-	delete& _endIndex;
-	_endIndex = endIndex;
+	_endIndex.setCol(endIndex.getCol());
+	_endIndex.setRow(endIndex.getRow());
 }
 void Piece::setColor(char color)
 {

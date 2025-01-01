@@ -30,12 +30,6 @@ bool King::move(char color, Piece* board[][BOARD_LEN])
 	int row = getStartIndex().getRow();
 	int col = getStartIndex().getCol();
 	setEndIndex(getStartIndex());
-	if (check(color, board))
-	{
-		getStartIndex().setRow(row);
-		getStartIndex().setCol(col);
-		return false;
-	}
 
 	if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getRow() + DIF_ROW == getEndIndex().getRow() || getStartIndex().getRow() - DIF_ROW == getEndIndex().getRow())
 	{
@@ -91,11 +85,11 @@ bool King::inTheWay(char color, Piece* board[][BOARD_LEN])
 */
 bool King::eat(char color, Piece* board[][BOARD_LEN])
 {
-
+	return true;
 }
 
 
 bool King::checkMate(char color, Piece* board[][BOARD_LEN])
 {
-
+	return false;
 }

@@ -39,4 +39,5 @@ Point Point::operator=(Point& p)
 {
 	setRow(p.getRow());
 	setCol(p.getCol());
+	return *this;
 }

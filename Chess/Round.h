@@ -1,4 +1,5 @@
-#pragma once
+#pragma warning( push )
+#pragma warning( disable : 4200 )
 #include "Bishop.h"
 #include "King.h"
 #include "Queen.h"
@@ -55,4 +56,5 @@ public:
 
 
 };
+#pragma warning( pop )
 
