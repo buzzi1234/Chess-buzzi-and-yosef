@@ -44,7 +44,7 @@ void Chess::newRound()
 void Chess::game()
 {
 	_gameRounds->turnToBoard();
-	//bool moveSuccessful = false;
+	bool moveSuccessful = false;
 
 	do
 	{
