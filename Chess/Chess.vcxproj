@@ -130,6 +130,7 @@
     <ClInclude Include="Bishop.h" />
     <ClInclude Include="Chess.h" />
     <ClInclude Include="ExceptionPieces.h" />
+    <ClInclude Include="ExceptionRound.h" />
     <ClInclude Include="King.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="Pawn.h" />

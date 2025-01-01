@@ -45,7 +45,11 @@
     <ClInclude Include="Round.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Chess.h">
+=======
+    <ClInclude Include="ExceptionRound.h">
+>>>>>>> 90d09ca3fae732bf315df470cf59531fe5b42795
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,8 +81,11 @@
     <ClCompile Include="Round.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Chess.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+=======
+>>>>>>> 90d09ca3fae732bf315df470cf59531fe5b42795
   </ItemGroup>
 </Project>
