@@ -29,7 +29,7 @@ bool Knight::move(char color, Piece* board[][BOARD_LEN])
 
 	if ((rowDifference == HELP_NUM_DOUBLE && colDifference == HELP_NUM) || (rowDifference == HELP_NUM && colDifference == HELP_NUM_DOUBLE))
 	{
-		return true;
+		return eat(color, board);
 	}
 	return false;
 }
@@ -41,7 +41,7 @@ output: Returns true or false if it is possible or not.
 */
 bool Knight::eat(char color, Piece* board[][BOARD_LEN])
 {
-	if (board[getEndIndex().getRow()][getStartIndex().getCol()]->getColor() == color)
+	if (board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() == color)
 	{
 		return false;
 	}

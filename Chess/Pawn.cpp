@@ -42,7 +42,7 @@ bool Pawn::move(char color, Piece* board[][BOARD_LEN])
 			return inTheWay(color, board);
 		}
 		//Walking for the first time two steps
-		if (getStartIndex().getRow() - DOUBLE_JUMP_PAWN == getEndIndex().getRow())
+		if (getStartIndex().getRow() - DOUBLE_JUMP_PAWN == getEndIndex().getRow() && getStartIndex().getCol() == getEndIndex().getCol())
 		{
 			return firstMove(color, board);
 		}
@@ -64,7 +64,7 @@ bool Pawn::move(char color, Piece* board[][BOARD_LEN])
 			return inTheWay(color, board);
 		}
 		//Walking for the first time two steps
-		if (getStartIndex().getRow() + DOUBLE_JUMP_PAWN == getEndIndex().getRow())
+		if (getStartIndex().getRow() + DOUBLE_JUMP_PAWN == getEndIndex().getRow() && getStartIndex().getCol() == getEndIndex().getCol())
 		{
 			return firstMove(color, board);
 		}

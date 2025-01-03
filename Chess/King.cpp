@@ -1,5 +1,5 @@
 #include "King.h"
-
+#include <cmath>
 
 //constructor
 King::King(Point startIndex, char color, char type) :
@@ -26,40 +26,11 @@ King::~King()
 */
 bool King::move(char color, Piece* board[][BOARD_LEN])
 {
-
-	int row = getStartIndex().getRow();
-	int col = getStartIndex().getCol();
-	setEndIndex(getStartIndex());
-
-	if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getRow() + DIF_ROW == getEndIndex().getRow() || getStartIndex().getRow() - DIF_ROW == getEndIndex().getRow())
+	if (abs(getStartIndex().getRow() - getEndIndex().getRow()) <= DIF_ROW && abs(getStartIndex().getCol() - getEndIndex().getCol()) <= DIF_COL)
 	{
-		if (getStartIndex().getCol() + DIF_COL == getEndIndex().getCol())
-		{
-			return inTheWay(color, board);
-		}
-
-		if (getStartIndex().getCol() - DIF_COL == getEndIndex().getCol())
-		{
-			return inTheWay(color, board);
-		}
+		return inTheWay(color, board);
 	}
-
-	if (getStartIndex().getCol() == getEndIndex().getCol())
-	{
-		if (getStartIndex().getRow() + DIF_ROW == getEndIndex().getRow())
-		{
-			return inTheWay(color, board);
-		}
-
-		if (getStartIndex().getRow() - DIF_ROW == getEndIndex().getRow())
-		{
-			return inTheWay(color, board);
-		}
-	}
-	
 	return false;
-
-
 }
 
 /*
@@ -70,12 +41,9 @@ bool King::move(char color, Piece* board[][BOARD_LEN])
 */
 bool King::inTheWay(char color, Piece* board[][BOARD_LEN])
 {
-	if (board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() == NONE_KING)
+	if (board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() == NONE_KING || board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() != color)
 	{
-		if (board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() == color)
-		{
-			return true;
-		}
+		return true;
 	}
 	return false;
 }

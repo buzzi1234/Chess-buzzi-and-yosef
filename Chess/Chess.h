@@ -9,13 +9,13 @@ class Chess
 {
 private:
 	Round* _gameRounds;
-	char _board[BOARD_BYTES];
+	char _move;
 
 public:
 	Chess(std::string msg);
 	~Chess();
 
-	char* getBoard();
+	char getMove();
 	
 
 	void finishedGame();

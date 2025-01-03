@@ -2,14 +2,14 @@
 
 Chess::Chess(std::string msg)
 {
-	this->_board[BOARD_BYTES - 1] = '\0';
+	this->_move = '\0';
 	this->_gameRounds = new Round(msg);
 	this->_gameRounds->turnToBoard();
 }
 
 Chess::~Chess()
 {
-	delete[] &this->_board;
+	this->_move = '\0';
 	this->_gameRounds->~Round();
 	delete _gameRounds;
 }
@@ -53,8 +53,11 @@ void Chess::game(std::string msg)
 		moveSuccessful = this->_gameRounds->moveInBoard();
 		if (!moveSuccessful)
 		{
+			this->_move = '2';
 			throw ExceptionPieces();
 		}
+		this->_move = '1';
+		newRound();
 
 	}
 	catch (const ExceptionPieces& e)
@@ -62,27 +65,12 @@ void Chess::game(std::string msg)
 		std::cout << e.badMove() << std::endl;
 
 	}
-	for (int row = 0; row < BOARD_LEN; row++)
-	{
-		for (int col = 0; col < BOARD_LEN; col++)
-		{
-			_board[(row*BOARD_LEN) + col] =_gameRounds->getBoard()[row][col]->getType();
-		}
-	}
-	newRound();
-	if (_gameRounds->getColor() == WHITE)
-	{
-		_board[BOARD_LEN * BOARD_LEN] = '0';
-	}
-	else
-	{
-		_board[BOARD_LEN * BOARD_LEN] = BLACK;
-	}
+
 	
 }
 
 //getter
-char* Chess::getBoard()
+char Chess::getMove()
 {
-	return this->_board;
+	return this->_move;
 }

@@ -24,19 +24,9 @@ Rook::~Rook()
 */
 bool Rook::move(char color, Piece* board[][BOARD_LEN])
 {
-	if (inTheWay(color, board))
+	if (inTheWay(getColor(), board))
 	{
-		switch (getColor())
-		{ 
-			case BLACK_ROOK:
-				return eat(WHITE_ROOK, board);
-				break;
-
-			case WHITE_ROOK:
-				return eat(BLACK_ROOK, board);
-			default:
-				return eat(NONE_ROOK, board);
-		}
+		return true;
 	}
 	return false;
 }
@@ -49,19 +39,9 @@ input: color - the kind of pieces we are looking for
 */
 bool Rook::eat(char color, Piece* board[][BOARD_LEN])
 {
-	if (getStartIndex().getRow() == getEndIndex().getRow() && getStartIndex().getCol() != getEndIndex().getCol())
+	if (board[getEndIndex().getRow()][getEndIndex().getCol()]->getColor() != color)
 	{
-		if (board[getStartIndex().getRow()][getEndIndex().getCol()]->getColor() == color)
-		{
-			return true;
-		}
-	}
-	else if (getStartIndex().getRow() != getEndIndex().getRow() && getStartIndex().getCol() == getEndIndex().getCol())
-	{
-		if (board[getEndIndex().getRow()][getStartIndex().getCol()]->getColor() == color)
-		{
-			return true;
-		}
+		return true;
 	}
 	return false;
 }
@@ -74,58 +54,9 @@ bool Rook::eat(char color, Piece* board[][BOARD_LEN])
 */
 bool Rook::inTheWay(char color, Piece* board[][BOARD_LEN])
 {
-	if (getStartIndex().getRow() == getEndIndex().getRow() && getStartIndex().getCol() != getEndIndex().getCol())
+	if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getCol() == getEndIndex().getCol())
 	{
-		if (getStartIndex().getCol() > getEndIndex().getCol())
-		{
-			for (int col = getStartIndex().getCol() - HELP_NUM; col > getEndIndex().getCol(); col--)
-			{
-				if (board[getStartIndex().getRow()][col]->getColor() == color)
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-
-		else if (getStartIndex().getCol() < getEndIndex().getCol())
-		{
-			for (int col = getStartIndex().getCol() + HELP_NUM; col < getEndIndex().getCol(); col++)
-			{
-				if (board[getStartIndex().getRow()][col]->getColor() == color)
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-
-	}
-	else if (getStartIndex().getRow() != getEndIndex().getRow() && getStartIndex().getCol() == getEndIndex().getCol())
-	{
-		if (getStartIndex().getRow() > getEndIndex().getRow())
-		{
-			for (int row = getStartIndex().getRow() - HELP_NUM; row > getEndIndex().getRow(); row--)
-			{
-				if (board[row][getStartIndex().getCol()]->getColor() == color)
-				{
-					return false;
-				}
-			}
-			return true;
-		}
-
-		if (getStartIndex().getRow() < getEndIndex().getRow())
-		{
-			for (int row = getStartIndex().getRow() + HELP_NUM; row < getEndIndex().getRow(); row++)
-			{
-				if (board[row][getStartIndex().getCol()]->getColor() == color)
-				{
-					return false;
-				}
-			}
-			return true;
-		}
+		return eat(color, board);
 	}
 	return false;
 }

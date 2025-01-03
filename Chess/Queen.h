@@ -8,6 +8,8 @@
 #define HELP_NUM 1
 #define ROOK_TYPE 'r'
 #define BISHOP_TYPE 'b'
+#define BLACK 'B'
+#define WHITE 'W'
 
 class Queen : public Piece
 {

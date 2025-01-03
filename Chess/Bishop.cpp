@@ -51,69 +51,20 @@ output: Returns true or false if it is possible or not.
 */
 bool Bishop::inTheWay(char color, Piece* board[][BOARD_LEN])
 {
-	//Checks if the Bishop goes forward
-	if (getStartIndex().getRow() < getEndIndex().getRow())
+	int rowStep = (getEndIndex().getRow() > getStartIndex().getRow()) - (getEndIndex().getRow() < getStartIndex().getRow());
+	int colStep = (getEndIndex().getCol() > getStartIndex().getCol()) - (getEndIndex().getCol() < getStartIndex().getCol());
+	int row = getStartIndex().getRow() + rowStep;
+	int col = getStartIndex().getCol() + colStep;
+	
+	while (row != getEndIndex().getRow() && col != getEndIndex().getCol())
 	{
-		// Checks if the Bishop goes right
-		if (getStartIndex().getCol() < getEndIndex().getCol())
+		if (board[row][col]->getColor() != HELP_COLOR)
 		{
-			for (int i = getStartIndex().getRow(); i <= getEndIndex().getRow(); i++)
-			{
-				for (int j = getStartIndex().getCol(); j == getEndIndex().getCol(); j++)
-				{
-					if (board[i][j]->getColor() != HELP_COLOR)
-					{
-						return false;
-					}
-				}
-			}
+			return false;
 		}
-		// Checks if the Bishop goes left
-		if (getStartIndex().getCol() > getEndIndex().getCol())
-		{
-			for (int i = getStartIndex().getRow(); i <= getEndIndex().getRow(); i++)
-			{
-				for (int j = getStartIndex().getCol(); j == getEndIndex().getCol(); j--)
-				{
-					if (board[i][j]->getColor() != HELP_COLOR)
-					{
-						return false;
-					}
-				}
-			}
-		}
+		row += rowStep;
+		col += colStep;
 	}
-	//Checks if the Bishop goes back
-	else
-	{
-		//Checks if the Bishop goes right 
-		if (getStartIndex().getCol() < getEndIndex().getCol())
-		{
-			for (int i = getStartIndex().getRow(); i == getEndIndex().getRow(); i--)
-			{
-				for (int j = getStartIndex().getCol(); j == getEndIndex().getCol(); j++)
-				{
-					if (board[i][j]->getColor() != HELP_COLOR)
-					{
-						return false;
-					}
-				}
-			}
-		}
-		//Checks if the Bishop goes left
-		if (getStartIndex().getCol() > getEndIndex().getCol())
-		{
-			for (int i = getStartIndex().getRow(); i == getEndIndex().getRow(); i--)
-			{
-				for (int j = getStartIndex().getCol(); j == getEndIndex().getCol(); j++)
-				{
-					if (board[i][j]->getColor() != HELP_COLOR)
-					{
-						return false;
-					}
-				}
-			}
-		}
-	}
+	
 	return true;
 }
