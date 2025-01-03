@@ -46,7 +46,7 @@ void Chess::newRound()
 
 void Chess::game(std::string msg)
 {
-	bool moveSuccessful = false;
+	char moveSuccessful = '0';
 	try
 	{
 		this->_gameRounds->setInputBoard(msg);

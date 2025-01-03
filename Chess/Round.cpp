@@ -117,13 +117,19 @@ bool Round::moveInBoard()
 {
 	Point p = *(turnToPoint(this->_inputBoard.substr(0, 2)));
 	Point p1 = *(turnToPoint(this->_inputBoard.substr(2, 2)));
+	Piece* player = this->_board[p1.getRow()][p1.getCol()];
 	char typeNew = ' ';
 	bool move = false;
 	if (this->_board[p.getRow()][p.getCol()]->getColor() == getColor())
 	{
 		this->_board[p.getRow()][p.getCol()]->setEndIndex(p1);
-		if (this->_board[p.getRow()][p.getCol()]->move(getColor(), getBoard()))
+		move = this->_board[p.getRow()][p.getCol()]->move(getColor(), getBoard());
+		if (move == '0')
 		{
+			Point p3(-1, -1);
+			this->_board[p.getRow()][p.getCol()]->setStartIndex(p1);
+			this->_board[p1.getRow()][p1.getCol()] = this->_board[p.getRow()][p.getCol()];
+			this->_board[p.getRow()][p.getCol()] = new Pawn(p3, NONE, NONE);
 			for (int row = 0; row < BOARD_LEN; row++)
 			{
 				for (int col = 0; col < BOARD_LEN; col++)
@@ -140,16 +146,14 @@ bool Round::moveInBoard()
 							move = check(BLACK, getBoard(), this->_board[row][col]->getStartIndex());
 							break;
 						}
+						
+						
 					}
 				}
 			}
 			if (!move)
 			{
-				this->_board[p.getRow()][p.getCol()]->setStartIndex(p1);
-				Point p3(-1, -1);
-				//delete& this->_board[p1.getRow()][p1.getCol()];
-				this->_board[p1.getRow()][p1.getCol()] = this->_board[p.getRow()][p.getCol()];
-				this->_board[p.getRow()][p.getCol()] = new Pawn(p3, NONE, NONE);
+				
 
 				//print the 2d array for debug
 				for (int row = 0; row < BOARD_LEN; row++)
@@ -164,12 +168,25 @@ bool Round::moveInBoard()
 				return !move;
 
 			}
+			this->_board[p.getRow()][p.getCol()] = this->_board[p1.getRow()][p1.getCol()];
+			this->_board[p1.getRow()][p1.getCol()] = player;
 
 		}
 	}
+	
+	//print the 2d array for debug
+	for (int row = 0; row < BOARD_LEN; row++)
+	{
+		for (int col = 0; col < BOARD_LEN; col++)
+		{
+			std::cout << this->_board[row][col]->getType();
+		}
+		std::cout << "\n";
+	}
+
 	this->_board[p.getRow()][p.getCol()]->setStartIndex(p);
 	this->_board[p.getRow()][p.getCol()]->setEndIndex(p);
-	return false;
+	return move;
 
 
 }

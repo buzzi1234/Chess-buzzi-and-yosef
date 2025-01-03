@@ -56,6 +56,47 @@ bool Rook::inTheWay(char color, Piece* board[][BOARD_LEN])
 {
 	if (getStartIndex().getRow() == getEndIndex().getRow() || getStartIndex().getCol() == getEndIndex().getCol())
 	{
+		if (getStartIndex().getCol() == getEndIndex().getCol())
+		{
+			int upOrDown = 0;
+			if (getStartIndex().getRow() > getEndIndex().getRow())
+			{
+				upOrDown = 1;
+			}
+			else
+			{
+				upOrDown = 1;
+			}
+			for (int row = getStartIndex().getRow() + upOrDown; row != getEndIndex().getRow(); row += upOrDown)
+			{
+				if (board[row][getStartIndex().getCol()]->getColor() != NONE_ROOK)
+				{
+					return false;
+				}
+			}
+		}
+
+		// Check horizontal movement
+		else if (getStartIndex().getRow() == getEndIndex().getRow())
+		{
+			int upOrDown = 0;
+			if (getStartIndex().getCol() > getEndIndex().getCol())
+			{
+				upOrDown = 1;
+			}
+			else
+			{
+				upOrDown = 1;
+			}
+			for (int col = getStartIndex().getCol() + upOrDown; col != getEndIndex().getCol(); col += upOrDown)
+			{
+				if (board[getStartIndex().getCol()][col] != 0)
+				{
+					return false; // Blocked by a piece
+				}
+			}
+		}
+
 		return eat(color, board);
 	}
 	return false;
