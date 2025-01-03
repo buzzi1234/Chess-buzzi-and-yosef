@@ -69,12 +69,12 @@ void Round::turnToBoard()
 			if (islower(this->_inputBoard[txtIndex]))
 			{
 				type = this->_inputBoard[txtIndex];
-				color = BLACK;
+				color = WHITE;
 			}
 			else
 			{
 				type = this->_inputBoard[txtIndex];
-				color = WHITE;
+				color = BLACK;
 			}
 			newType = tolower(type);
 			if(newType == KING)

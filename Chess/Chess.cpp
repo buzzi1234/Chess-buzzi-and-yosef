@@ -56,7 +56,7 @@ void Chess::game(std::string msg)
 			this->_move = '2';
 			throw ExceptionPieces();
 		}
-		this->_move = '1';
+		this->_move = '0';
 		newRound();
 
 	}
