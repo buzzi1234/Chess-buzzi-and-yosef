@@ -90,6 +90,31 @@ bool Pawn::eat(char color, Piece* board[][BOARD_LEN])
 	return true;
 }
 
+bool Pawn::turnPiece(std::string type)
+{
+	if (type == "Q") 
+	{
+		this->setType(QUEEN);
+	}
+	else if (type == "R") 
+	{
+		this->setType(ROOK);
+	}
+	else if (type == "B") 
+	{
+		this->setType(BISHOP);
+	}
+	else if (type == "N") 
+	{
+		this->setType(KNIGHT);
+	}
+	else 
+	{
+		return false;
+	}
+	return true;
+}
+
 /*
 The function checks if it's his first turn to see if he can two step.
 input: color - The color of the player's turn; board - The board is playing.

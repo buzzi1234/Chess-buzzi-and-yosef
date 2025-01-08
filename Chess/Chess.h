@@ -4,6 +4,7 @@
 #include <iostream>
 
 #define BOARD_BYTES 66
+#define FRONTEND_MSG "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"
 
 class Chess
 {
@@ -12,7 +13,7 @@ private:
 	char _move;
 
 public:
-	Chess(std::string msg);
+	Chess();
 	~Chess();
 
 	char getMove();

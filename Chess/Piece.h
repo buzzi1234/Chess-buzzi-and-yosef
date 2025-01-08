@@ -16,9 +16,9 @@ public:
 	Piece();
 	~Piece();
 	
-	virtual bool move(char color, Piece* board[][BOARD_LEN]) = 0;
-	virtual bool eat(char color, Piece* board[][BOARD_LEN]) = 0;
-	virtual bool inTheWay(char color, Piece* board[][BOARD_LEN]) = 0;
+	virtual bool move(char color, Piece* board[BOARD_LEN][BOARD_LEN]) = 0;
+	virtual bool eat(char color, Piece* board[BOARD_LEN][BOARD_LEN]) = 0;
+	virtual bool inTheWay(char color, Piece* board[BOARD_LEN][BOARD_LEN]) = 0;
 	Point getStartIndex() const;
 	Point getEndIndex() const;
 	char getColor() const;

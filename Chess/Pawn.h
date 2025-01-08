@@ -2,6 +2,12 @@
 #include "Piece.h"
 #define WHITE_PAWN 'W'
 #define BLACK_PAWN 'B'
+#define BISHOP 'b'
+#define KING 'k'
+#define QUEEN 'q'
+#define KNIGHT 'n'
+#define PAWN 'p'
+#define ROOK 'r'
 #define NONE_PAWN '#'
 #define BOARD_LEN 8
 #define HELP_NUM 1
@@ -20,8 +26,9 @@ public:
 
 	virtual bool move(char color, Piece* board[][BOARD_LEN]) override;
 	virtual bool eat(char color, Piece* board[][BOARD_LEN]) override;
-	//bool turnQueen();
+	bool turnPiece(std::string type);
 	bool firstMove(char color, Piece* board[][BOARD_LEN]);
 	virtual bool inTheWay(char color, Piece* board[][BOARD_LEN]) override;
+
 };
 

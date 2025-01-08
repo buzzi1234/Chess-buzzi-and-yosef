@@ -34,7 +34,8 @@ class Round
 private:
 	std::string _inputBoard;
 	char _color;
-	Piece* _board[][BOARD_LEN];
+	Pawn* _pawn;
+	Piece* _board[BOARD_LEN][BOARD_LEN];
 	
 public:
 	Round(std::string inputBoard);
@@ -53,7 +54,8 @@ public:
 	bool moveInBoard();
 	char win();
 	Point* turnToPoint(std::string point);
-
+	bool isCheck();
+	bool isCheckmate();
 
 };
 #pragma warning( pop )

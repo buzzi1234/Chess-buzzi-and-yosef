@@ -61,7 +61,7 @@ bool Rook::inTheWay(char color, Piece* board[][BOARD_LEN])
 			int upOrDown = 0;
 			if (getStartIndex().getRow() > getEndIndex().getRow())
 			{
-				upOrDown = 1;
+				upOrDown = -1;
 			}
 			else
 			{
@@ -82,7 +82,7 @@ bool Rook::inTheWay(char color, Piece* board[][BOARD_LEN])
 			int upOrDown = 0;
 			if (getStartIndex().getCol() > getEndIndex().getCol())
 			{
-				upOrDown = 1;
+				upOrDown = -1;
 			}
 			else
 			{
@@ -90,7 +90,7 @@ bool Rook::inTheWay(char color, Piece* board[][BOARD_LEN])
 			}
 			for (int col = getStartIndex().getCol() + upOrDown; col != getEndIndex().getCol(); col += upOrDown)
 			{
-				if (board[getStartIndex().getCol()][col] != 0)
+				if (board[getStartIndex().getRow()][col]->getColor() != NONE_ROOK)
 				{
 					return false; // Blocked by a piece
 				}

@@ -6,6 +6,14 @@ Round::Round(std::string inputBoard)
 	setInputBoard(inputBoard);
 	setColor(WHITE);
 	turnToBoard();
+	for (int i = 0; i < BOARD_LEN; i++)
+	{
+		for (int j = 0; j < BOARD_LEN; j++)
+		{
+			_board[i][j] = nullptr;
+		}
+	}
+	_pawn = new Pawn(Point(0, 0), WHITE, 'P');
 }
 
 //destructor
@@ -18,9 +26,11 @@ Round::~Round()
 		{
 			delete _board[row][col];
 		}
-		delete[] &_board[row];
+		delete[] & _board[row];
 	}
-	delete[] &_board;
+	delete[] & _board;
+
+	delete _pawn;
 }
 
 //getters
@@ -77,20 +87,20 @@ void Round::turnToBoard()
 				color = BLACK;
 			}
 			newType = tolower(type);
-			if(newType == KING)
+			if (newType == KING)
 				this->_board[row][col] = new King(p, color, type);
 			else if (newType == KNIGHT)
 				this->_board[row][col] = new Knight(p, color, type);
-				
+
 			else if (newType == PAWN)
 				this->_board[row][col] = new Pawn(p, color, type);
 
 			else if (newType == QUEEN)
 				this->_board[row][col] = new Queen(p, color, type);
-				
+
 			else if (newType == ROOK)
 				this->_board[row][col] = new Rook(p, color, type);
-				
+
 			else if (newType == BISHOP)
 				this->_board[row][col] = new Bishop(p, color, type);
 			else
@@ -117,19 +127,13 @@ bool Round::moveInBoard()
 {
 	Point p = *(turnToPoint(this->_inputBoard.substr(0, 2)));
 	Point p1 = *(turnToPoint(this->_inputBoard.substr(2, 2)));
-	Piece* player = this->_board[p1.getRow()][p1.getCol()];
 	char typeNew = ' ';
 	bool move = false;
 	if (this->_board[p.getRow()][p.getCol()]->getColor() == getColor())
 	{
 		this->_board[p.getRow()][p.getCol()]->setEndIndex(p1);
-		move = this->_board[p.getRow()][p.getCol()]->move(getColor(), getBoard());
-		if (move == '0')
+		if (this->_board[p.getRow()][p.getCol()]->move(getColor(), getBoard()))
 		{
-			Point p3(-1, -1);
-			this->_board[p.getRow()][p.getCol()]->setStartIndex(p1);
-			this->_board[p1.getRow()][p1.getCol()] = this->_board[p.getRow()][p.getCol()];
-			this->_board[p.getRow()][p.getCol()] = new Pawn(p3, NONE, NONE);
 			for (int row = 0; row < BOARD_LEN; row++)
 			{
 				for (int col = 0; col < BOARD_LEN; col++)
@@ -137,56 +141,51 @@ bool Round::moveInBoard()
 					typeNew = tolower(this->_board[row][col]->getType());
 					if (typeNew == KING && this->_board[row][col]->getColor() == getColor())
 					{
-						switch (getColor())
-						{
-						case BLACK:
-							move = check(WHITE, getBoard(), this->_board[row][col]->getStartIndex());
-							break;
-						case WHITE:
-							move = check(BLACK, getBoard(), this->_board[row][col]->getStartIndex());
-							break;
-						}
+						bool checkStatus = isCheck();
+						bool checkmateStatus = isCheckmate();
 						
+						if (checkmateStatus || checkStatus)
+						{
+							return true;
+						}
 						
 					}
 				}
 			}
 			if (!move)
 			{
-				
+				this->_board[p.getRow()][p.getCol()]->setStartIndex(p1);
+				Point p3(-1, -1);
+				//delete& this->_board[p1.getRow()][p1.getCol()];
+				this->_board[p1.getRow()][p1.getCol()] = this->_board[p.getRow()][p.getCol()];
+				this->_board[p.getRow()][p.getCol()] = new Pawn(p3, NONE, NONE);
 
-				//print the 2d array for debug
-				for (int row = 0; row < BOARD_LEN; row++)
+				if ((this->_board[p1.getRow()][p1.getCol()]->getType() == PAWN) && ((this->_board[p1.getRow()][p1.getCol()]->getColor() == WHITE_PAWN && p1.getRow() == 0) || (this->_board[p1.getRow()][p1.getCol()]->getColor() == BLACK_PAWN && p1.getRow() == BOARD_LEN - 1)))
 				{
-					for (int col = 0; col < BOARD_LEN; col++)
+					std::string input;
+					std::cout << "Enter the piece to promote the pawn to (Q, R, B, N): ";
+					std::cin >> input;
+					if (_pawn->turnPiece(input))
 					{
-						std::cout << this->_board[row][col]->getType();
+						std::cout << "Pawn promoted!" << input << std::endl;
 					}
-					std::cout << "\n";
+					else
+					{
+						std::cout << "Promotion failed!" << std::endl;
+					}
 				}
+
 
 				return !move;
 
 			}
-			this->_board[p.getRow()][p.getCol()] = this->_board[p1.getRow()][p1.getCol()];
-			this->_board[p1.getRow()][p1.getCol()] = player;
 
 		}
 	}
-	
-	//print the 2d array for debug
-	for (int row = 0; row < BOARD_LEN; row++)
-	{
-		for (int col = 0; col < BOARD_LEN; col++)
-		{
-			std::cout << this->_board[row][col]->getType();
-		}
-		std::cout << "\n";
-	}
-
 	this->_board[p.getRow()][p.getCol()]->setStartIndex(p);
 	this->_board[p.getRow()][p.getCol()]->setEndIndex(p);
-	return move;
+
+	return false;
 
 
 }
@@ -213,7 +212,7 @@ bool Round::check(char color, Piece* board[][BOARD_LEN], Point k)
 					return true;
 				}
 				board[row][col]->setEndIndex(board[row][col]->getStartIndex());
-				
+
 			}
 		}
 	}
@@ -267,3 +266,77 @@ Point* Round::turnToPoint(std::string point)
 
 	return new Point(row, col);
 }
+
+bool Round::isCheck()
+{
+	char Color = getColor();
+	char counterColor;
+	if (Color == WHITE)
+	{
+		counterColor = BLACK;
+	}
+	else
+	{
+		counterColor = WHITE;
+	}
+
+	for (int row = 0; row < BOARD_LEN; row++)
+	{
+		for (int col = 0; col < BOARD_LEN; col++)
+		{
+			if (this->_board[row][col]->getType() == KING && this->_board[row][col]->getColor() == Color)
+			{
+				Point kingP(row, col);
+				return check(counterColor, getBoard(), kingP);
+			}
+		}
+	}
+	return false;
+}
+
+bool Round::isCheckmate()
+{
+	if (!isCheck())
+	{
+		return false;
+	}
+
+	char Color = getColor();
+	for (int row = 0; row < BOARD_LEN; row++)
+	{
+		for (int col = 0; col < BOARD_LEN; col++)
+		{
+			Piece* piece = this->_board[row][col];
+			if (piece->getColor() == Color)
+			{
+				for (int newRow = 0; newRow < BOARD_LEN; newRow++)
+				{
+					for (int newCol = 0; newCol < BOARD_LEN; newCol++)
+					{
+						Point start(row, col);
+						Point end(newRow, newCol);
+
+						if (piece->move(Color, this->_board))
+						{
+							Piece* tempPiece = this->_board[newRow][newCol];
+							this->_board[newRow][newCol] = piece;
+							this->_board[row][col] = new Pawn(Point(row, col), NONE, NONE);
+							if (!isCheck())
+							{
+								this->_board[row][col] = piece;
+								this->_board[newRow][newCol] = tempPiece;
+								return false;
+							}
+							this->_board[row][col] = piece;
+							this->_board[newRow][newCol] = tempPiece;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
+

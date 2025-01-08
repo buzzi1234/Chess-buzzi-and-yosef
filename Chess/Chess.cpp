@@ -1,9 +1,9 @@
 #include "Chess.h"
 
-Chess::Chess(std::string msg)
+Chess::Chess()
 {
 	this->_move = '\0';
-	this->_gameRounds = new Round(msg);
+	this->_gameRounds = new Round(FRONTEND_MSG);
 	this->_gameRounds->turnToBoard();
 }
 
@@ -46,26 +46,46 @@ void Chess::newRound()
 
 void Chess::game(std::string msg)
 {
-	char moveSuccessful = '0';
+	bool moveSuccessful = false;
 	try
 	{
 		this->_gameRounds->setInputBoard(msg);
 		moveSuccessful = this->_gameRounds->moveInBoard();
+
 		if (!moveSuccessful)
 		{
 			this->_move = '2';
 			throw ExceptionPieces();
 		}
-		this->_move = '0';
+		if (this->_gameRounds->isCheckmate())
+		{
+			this->_move = '8';
+		}
+		else if (this->_gameRounds->isCheck())
+		{
+			this->_move = '1';
+		}
+		else
+		{
+			this->_move = '0';
+		}
+
 		newRound();
 
 	}
 	catch (const ExceptionPieces& e)
 	{
 		std::cout << e.badMove() << std::endl;
-
+		this->_move = '6';
 	}
-
+	for (int row = 0; row < BOARD_LEN; row++)
+	{
+		for (int col = 0; col < BOARD_LEN; col++)
+		{
+			std::cout << this->_gameRounds->getBoard()[row][col]->getType();
+		}
+		std::cout << "\n";
+	}
 	
 }
 

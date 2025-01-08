@@ -47,7 +47,7 @@ void main()
 	// msgToGraphics should contain the board string accord the protocol
 
 	strcpy_s(msgToGraphics, "rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1"); // just example...
-	Chess* game = new Chess("rnbkqbnrpppppppp################################PPPPPPPPRNBKQBNR1");
+	Chess* game = new Chess();
 
 	p.sendMessageToGraphics(msgToGraphics);   // send the board string
 

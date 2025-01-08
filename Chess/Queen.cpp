@@ -18,7 +18,6 @@ Queen::~Queen()
 {
 	delete _rook;
 	delete _bishop;
-	Piece::~Piece();
 }
 
 /*
