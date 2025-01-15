@@ -34,6 +34,8 @@ class Round
 private:
 	std::string _inputBoard;
 	char _color;
+	Point _p;
+	Point _p1;
 	Pawn* _pawn;
 	Piece* _board[BOARD_LEN][BOARD_LEN];
 	
@@ -52,7 +54,6 @@ public:
 	bool check(char color, Piece* board[][BOARD_LEN], Point k);
 	void turnToBoard();
 	bool moveInBoard();
-	char win();
 	Point* turnToPoint(std::string point);
 	bool isCheck();
 	bool isCheckmate();

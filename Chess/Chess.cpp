@@ -1,22 +1,26 @@
 #include "Chess.h"
-
+//constructor
 Chess::Chess()
 {
 	this->_move = '\0';
 	this->_gameRounds = new Round(FRONTEND_MSG);
 	this->_gameRounds->turnToBoard();
 }
-
+//destructor
 Chess::~Chess()
 {
 	this->_move = '\0';
 	this->_gameRounds->~Round();
 	delete _gameRounds;
 }
-
+/*
+* The func prints who won in the cmd
+* input: none
+* output: none
+*/
 void Chess::finishedGame()
 {
-	char winner = this->_gameRounds->win();
+	char winner = this->_move;
 	if (winner == BLACK)
 	{
 		std::cout << "Black wins the game!" << std::endl;
@@ -31,6 +35,11 @@ void Chess::finishedGame()
 	}
 }
 
+/*
+* The func change the color to move the next round
+* input: none
+* output: none
+*/
 void Chess::newRound()
 {
 	char currentColor = this->_gameRounds->getColor();
@@ -44,6 +53,11 @@ void Chess::newRound()
 	}
 }
 
+/*
+* The func checks what char is needed to send the frontend
+* input: the move the player wants to make
+* output: none
+*/
 void Chess::game(std::string msg)
 {
 	bool moveSuccessful = false;
@@ -60,17 +74,19 @@ void Chess::game(std::string msg)
 		if (this->_gameRounds->isCheckmate())
 		{
 			this->_move = '8';
+			finishedGame();
 		}
 		else if (this->_gameRounds->isCheck())
 		{
-			this->_move = '1';
+			this->_move = '4';
 		}
 		else
 		{
+			newRound();
 			this->_move = '0';
 		}
 
-		newRound();
+		
 
 	}
 	catch (const ExceptionPieces& e)

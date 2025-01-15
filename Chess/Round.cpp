@@ -13,6 +13,8 @@ Round::Round(std::string inputBoard)
 			_board[i][j] = nullptr;
 		}
 	}
+	this->_p;
+	this->_p1;
 	_pawn = new Pawn(Point(0, 0), WHITE, 'P');
 }
 
@@ -29,7 +31,8 @@ Round::~Round()
 		delete[] & _board[row];
 	}
 	delete[] & _board;
-
+	delete& this->_p;
+	delete& this->_p1;
 	delete _pawn;
 }
 
@@ -125,14 +128,14 @@ void Round::turnToBoard()
 */
 bool Round::moveInBoard()
 {
-	Point p = *(turnToPoint(this->_inputBoard.substr(0, 2)));
-	Point p1 = *(turnToPoint(this->_inputBoard.substr(2, 2)));
+	this->_p = *(turnToPoint(this->getInputBoard().substr(0,2)));
+	this->_p1 = *(turnToPoint(this->getInputBoard().substr(2, 2)));
 	char typeNew = ' ';
 	bool move = false;
-	if (this->_board[p.getRow()][p.getCol()]->getColor() == getColor())
+	if (this->_board[this->_p.getRow()][this->_p.getCol()]->getColor() == getColor())
 	{
-		this->_board[p.getRow()][p.getCol()]->setEndIndex(p1);
-		if (this->_board[p.getRow()][p.getCol()]->move(getColor(), getBoard()))
+		this->_board[this->_p.getRow()][this->_p.getCol()]->setEndIndex(this->_p1);
+		if (this->_board[this->_p.getRow()][this->_p.getCol()]->move(getColor(), getBoard()))
 		{
 			for (int row = 0; row < BOARD_LEN; row++)
 			{
@@ -141,26 +144,29 @@ bool Round::moveInBoard()
 					typeNew = tolower(this->_board[row][col]->getType());
 					if (typeNew == KING && this->_board[row][col]->getColor() == getColor())
 					{
+						
 						bool checkStatus = isCheck();
 						bool checkmateStatus = isCheckmate();
 						
-						if (checkmateStatus || checkStatus)
+						if (checkStatus || checkmateStatus)
 						{
 							return true;
 						}
-						
 					}
 				}
 			}
 			if (!move)
 			{
-				this->_board[p.getRow()][p.getCol()]->setStartIndex(p1);
+				this->_board[this->_p.getRow()][this->_p.getCol()]->setStartIndex(this->_p1);
 				Point p3(-1, -1);
 				//delete& this->_board[p1.getRow()][p1.getCol()];
-				this->_board[p1.getRow()][p1.getCol()] = this->_board[p.getRow()][p.getCol()];
-				this->_board[p.getRow()][p.getCol()] = new Pawn(p3, NONE, NONE);
+				this->_board[this->_p1.getRow()][this->_p1.getCol()] = this->_board[this->_p.getRow()][this->_p.getCol()];
+				this->_board[this->_p.getRow()][this->_p.getCol()] = new Pawn(p3, NONE, NONE);
+				this->_p.setCol(-1);
+				this->_p.setRow(-1);
 
-				if ((this->_board[p1.getRow()][p1.getCol()]->getType() == PAWN) && ((this->_board[p1.getRow()][p1.getCol()]->getColor() == WHITE_PAWN && p1.getRow() == 0) || (this->_board[p1.getRow()][p1.getCol()]->getColor() == BLACK_PAWN && p1.getRow() == BOARD_LEN - 1)))
+
+				if ((this->_board[this->_p1.getRow()][this->_p1.getCol()]->getType() == PAWN) && ((this->_board[this->_p1.getRow()][this->_p1.getCol()]->getColor() == WHITE_PAWN && this->_p1.getRow() == 0) || (this->_board[this->_p1.getRow()][this->_p1.getCol()]->getColor() == BLACK_PAWN && this->_p1.getRow() == BOARD_LEN - 1)))
 				{
 					std::string input;
 					std::cout << "Enter the piece to promote the pawn to (Q, R, B, N): ";
@@ -182,8 +188,8 @@ bool Round::moveInBoard()
 
 		}
 	}
-	this->_board[p.getRow()][p.getCol()]->setStartIndex(p);
-	this->_board[p.getRow()][p.getCol()]->setEndIndex(p);
+	this->_board[this->_p.getRow()][this->_p.getCol()]->setStartIndex(this->_p);
+	this->_board[this->_p.getRow()][this->_p.getCol()]->setEndIndex(this->_p);
 
 	return false;
 
@@ -199,6 +205,9 @@ input: color - the kind of pieces we are looking for
 */
 bool Round::check(char color, Piece* board[][BOARD_LEN], Point k)
 {
+	Piece* player = this->_board[this->_p1.getRow()][this->_p1.getCol()];
+	this->_board[this->_p.getRow()][this->_p.getCol()]->setStartIndex(this->_p1);
+	Point p3(-1, -1);
 	for (int row = 0; row < BOARD_LEN; row++)
 	{
 		for (int col = 0; col < BOARD_LEN; col++)
@@ -217,11 +226,6 @@ bool Round::check(char color, Piece* board[][BOARD_LEN], Point k)
 		}
 	}
 	return false;
-}
-
-char Round::win()
-{
-	return '8';
 }
 
 
@@ -267,10 +271,16 @@ Point* Round::turnToPoint(std::string point)
 	return new Point(row, col);
 }
 
+/*
+* The func start to check the check (find the king and shift the players in the board)
+* input: none
+* output: true there is a check false dont.
+*/
 bool Round::isCheck()
 {
 	char Color = getColor();
 	char counterColor;
+	char typeNew;
 	if (Color == WHITE)
 	{
 		counterColor = BLACK;
@@ -279,60 +289,63 @@ bool Round::isCheck()
 	{
 		counterColor = WHITE;
 	}
-
-	for (int row = 0; row < BOARD_LEN; row++)
+	if (this->_p.getCol() != -1)
 	{
-		for (int col = 0; col < BOARD_LEN; col++)
+		Piece* player = this->_board[this->_p1.getRow()][this->_p1.getCol()];
+		this->_board[this->_p.getRow()][this->_p.getCol()]->setStartIndex(this->_p1);
+		Point p3(-1, -1);
+
+		this->_board[this->_p1.getRow()][this->_p1.getCol()] = this->_board[this->_p.getRow()][this->_p.getCol()];
+		this->_board[this->_p.getRow()][this->_p.getCol()] = new Pawn(p3, NONE, NONE);
+
+		for (int row = 0; row < BOARD_LEN; row++)
 		{
-			if (this->_board[row][col]->getType() == KING && this->_board[row][col]->getColor() == Color)
+			for (int col = 0; col < BOARD_LEN; col++)
 			{
-				Point kingP(row, col);
-				return check(counterColor, getBoard(), kingP);
+				typeNew = tolower(this->_board[row][col]->getType());
+				if (typeNew == KING && this->_board[row][col]->getColor() == Color)
+				{
+					Point kingP(row, col);
+					if (check(counterColor, getBoard(), kingP))
+					{
+						this->_board[this->_p.getRow()][this->_p.getCol()] = this->_board[this->_p1.getRow()][this->_p1.getCol()];
+						this->_board[this->_p1.getRow()][this->_p1.getCol()] = player;
+						this->_board[this->_p.getRow()][this->_p.getCol()]->setStartIndex(this->_p);
+						return true;
+					}
+				}
 			}
 		}
+		this->_board[this->_p.getRow()][this->_p.getCol()] = this->_board[this->_p1.getRow()][this->_p1.getCol()];
+		this->_board[this->_p1.getRow()][this->_p1.getCol()] = player;
+		this->_board[this->_p.getRow()][this->_p.getCol()]->setStartIndex(this->_p);
 	}
 	return false;
 }
 
+/*
+* The func start to check the checkmate
+* input: none
+* output: true there is a checkmate false dont.
+*/
 bool Round::isCheckmate()
 {
 	if (!isCheck())
 	{
 		return false;
 	}
-
+	char typeNew;
 	char Color = getColor();
 	for (int row = 0; row < BOARD_LEN; row++)
 	{
 		for (int col = 0; col < BOARD_LEN; col++)
 		{
-			Piece* piece = this->_board[row][col];
-			if (piece->getColor() == Color)
+			typeNew = tolower(this->_board[row][col]->getType());
+			if (typeNew == KING && this->_board[row][col]->getColor() == Color)
 			{
-				for (int newRow = 0; newRow < BOARD_LEN; newRow++)
-				{
-					for (int newCol = 0; newCol < BOARD_LEN; newCol++)
-					{
-						Point start(row, col);
-						Point end(newRow, newCol);
-
-						if (piece->move(Color, this->_board))
-						{
-							Piece* tempPiece = this->_board[newRow][newCol];
-							this->_board[newRow][newCol] = piece;
-							this->_board[row][col] = new Pawn(Point(row, col), NONE, NONE);
-							if (!isCheck())
-							{
-								this->_board[row][col] = piece;
-								this->_board[newRow][newCol] = tempPiece;
-								return false;
-							}
-							this->_board[row][col] = piece;
-							this->_board[newRow][newCol] = tempPiece;
-						}
-					}
-				}
+				Point kingP(row, col);
 			}
+			
 		}
 	}
 
