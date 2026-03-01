@@ -2,7 +2,7 @@
 
 ***
 ## Description
-This was built using cpp with an already built in GUI
+This was built using C++ with an already built in GUI
 This project was made for our second year in magshimim Cyber
 
 
